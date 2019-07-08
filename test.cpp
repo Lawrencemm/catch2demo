@@ -1,12 +1,14 @@
 #include <catch2/catch.hpp>
 
-int my_formula(int arg)
-{
-    return arg * arg * arg;
-}
+float my_formula(float arg) { return arg + 0.1f + 0.1f; }
 
-TEST_CASE("Test my function is always positive") {
-    int j = GENERATE(3, -4);
-    CAPTURE(j);
-    REQUIRE(my_formula(j) > 0);
+TEST_CASE("Test float numbers work")
+{
+    auto [arg, expected_answer] = GENERATE(table<float, float>({
+      {1.f, 1.2f},
+      {20.f, 20.2f},
+      {200.f, 200.2f},
+    }));
+    CAPTURE(arg, expected_answer);
+    REQUIRE(my_formula(arg) == expected_answer);
 }
